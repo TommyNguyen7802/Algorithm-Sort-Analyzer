@@ -7,37 +7,34 @@ def bubble_sort(students):
         for j in range(0, n - i - 1):
             if students[j][1] > students[j + 1][1]:
                 students[j], students[j + 1] = students[j + 1], students[j]
+# Merge Sort
+def merge_sort(flights):
 
-# Insertion Sort
-def insertion_sort(cards):
-    for i in range(1, len(cards)):
-        key = cards[i] # The card to be placed in the correct position
-        j = i - 1 # Index of last card in the sorted position
+    if len(flights) > 1:
+        mid = len(flights) // 2 # Find the middle index
+        left_half = flights[:mid] # Divide list into halves
+        right_half = flights[mid:]
 
-        # Move elements of the sorted portion
-        while j >= 0 and key < cards[j]:
-            cards[j + 1] = cards[j] # Shift the elements to the right
-            j -= 1 # Move one step to the left
-            
-        cards[j + 1] = key # Place key in its correct position
+        merge_sort(left_half)
+        merge_sort(right_half)
 
-# Linear Search
-def linear_search(L,T):
-    for index in range(len(L)):
-        if L[index] == T:
-            return index
-    return -1
-
-# Selection Sort
-def selection_sort(books):
-    n = len(books)
-    for i in range(n):
-        min_index = i
-
-        for j in range(i + 1, n):
-            if books[j][1] < books[min_index][1]:
-                min_index = j
-        books[i], books[min_index] = books[min_index], books[i]
+        i = j = k = 0
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i][1] < right_half[j][1]:
+                flights[k] = left_half[i]
+                i += 1
+            else:
+                flights[k] = right_half[j]
+                j += 1
+            k += 1
+        while i < len(left_half):
+            flights[k] = left_half[i]
+            i += 1
+            k += 1
+        while j < len(right_half):
+            flights[k] = right_half[j]
+            j += 1
+            k += 1
 
 # Radix Sort
 def counting_sort(arr, exp):
@@ -74,3 +71,10 @@ def radix_sort(arr):
         counting_sort(arr, exp)
         exp *= 10
     return arr
+
+# Linear Search
+def linear_search(L,T):
+    for index in range(len(L)):
+        if L[index] == T:
+            return index
+    return -1
