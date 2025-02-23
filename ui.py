@@ -18,9 +18,25 @@ def show_results_window(): # new window with result/visualization
     else:
         errors_label.config(text="") # clear error message
 
-    minimum_value = int(min_value_input.get())
-    maximum_value = int(max_value_input.get())
-    elements = int(number_of_elements_input.get())
+
+    inputs = {
+        "minimum_value": min_value_input.get(),
+        "maximum_value": max_value_input.get(),
+        "elements": number_of_elements_input.get()
+    }
+
+    # Check if any input is an empty string
+    if any(value == "" for value in inputs.values()):
+        errors_label.config(text="Error: please enter values into minimum value, maximum value, and number of elements", fg="red")
+        return
+
+    # Convert inputs to integers
+    minimum_value = int(inputs["minimum_value"])
+    maximum_value = int(inputs["maximum_value"])
+    elements = int(inputs["elements"])
+
+    # Clear error message if all checks passed
+    errors_label.config(text="")
 
     # if min is greater than max = error
     if minimum_value > maximum_value:
