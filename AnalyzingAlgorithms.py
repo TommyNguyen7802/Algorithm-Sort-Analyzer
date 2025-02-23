@@ -1,6 +1,6 @@
 # Analyzing Algorithms in Big O
 
-# Bubble Sort
+# Bubble Sort O(n^2)
 def bubble_sort(arr):
     arr = arr.copy()
     n = len(arr)
@@ -9,15 +9,13 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
-# Merge Sort
+
+# Merge Sort O(n log n)
 def merge_sort(arr):
 
-    if len(arr) <= 1:
-        return arr
-
     if len(arr) > 1:
-        mid = len(arr) // 2 # Find the middle index
-        left_half = arr[:mid] # Divide list into halves
+        mid = len(arr) // 2 # find middle index
+        left_half = arr[:mid] # dividing list into halves
         right_half = arr[mid:]
 
         merge_sort(left_half)
@@ -32,16 +30,32 @@ def merge_sort(arr):
                 arr[k] = right_half[j]
                 j += 1
             k += 1
+        
         while i < len(left_half):
             arr[k] = left_half[i]
             i += 1
             k += 1
+        
         while j < len(right_half):
             arr[k] = right_half[j]
             j += 1
             k += 1
 
-# Radix Sort
+    return arr
+
+# Quick Sort O(n log n)
+def quick_sort(arr):
+    if(len(arr) <= 1):
+        return arr
+    
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+
+    return quick_sort(left) + middle + quick_sort(right)
+
+# Radix Sort O(nk)
 def counting_sort(arr, exp):
 
     n = len(arr)
@@ -79,21 +93,9 @@ def radix_sort(arr):
         exp *= 10
     return arr
 
-# Linear Search
+# Linear Search O(n)
 def linear_search(L,T):
     for index in range(len(L)):
         if L[index] == T:
             return index
     return -1
-
-# Quick Sort
-def quick_sort(arr):
-    if(len(arr) <= 1):
-        return arr
-    
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-
-    return quick_sort(left) + middle + quick_sort(right)
