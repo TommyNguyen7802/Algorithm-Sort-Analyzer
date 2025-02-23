@@ -1,8 +1,10 @@
 import tkinter as tk
 import random
 import sys
+from AnalyzingAlgorithms import *
 
 def generate_random_array(min_value, max_value, num_of_elements):
+    # generate random array
     random_array = [random.randint(min_value, max_value) for _ in range(num_of_elements)]
     return random_array
 
@@ -28,14 +30,41 @@ def show_results_window(): # new window with result/visualization
     # check selected
     if wantBubbleSort.get() == 1:
         print("User selected Bubble Sort")
+        sorted_array = bubble_sort(array)
+        random_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
+        random_label.pack()
+        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label.pack()
     if wantMergeSort.get() == 1:
         print("User selected Merge Sort")
+        sorted_array = merge_sort(array)
+        random_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
+        random_label.pack()
+        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label.pack()
     if wantQuickSort.get() == 1:
         print("User selected Quick Sort")
+        sorted_array = quick_sort(array)
+        random_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
+        random_label.pack()
+        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label.pack()
     if wantRadixSort.get() == 1:
         print("User selected Radix Sort")
+        sorted_array = radix_sort(array)
+        random_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
+        random_label.pack()
+        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label.pack()
     if wantLinearSort.get() == 1:
         print("User selected Linear Sort")
+        target_element = int(target_element_input.get())
+        sorted_array = linear_search(array, target_element)
+        random_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
+        random_label.pack()
+        result_label = tk.Label(result_window, text=f"Index of {target_element}: {sorted_array}", font=body_font)
+        result_label.pack()
+        
 
 # create UI window
 root = tk.Tk()
@@ -59,6 +88,13 @@ number_of_elements_input = tk.Spinbox(root, from_=0, to=sys.maxsize, font=body_f
 
 # configure input array UI placement
 configure_input_array_label.grid(row=0, column=0, columnspan=2, sticky="n")
+
+# target element input for Linear Sort
+target_element_label = tk.Label(root, text="Enter target element for Linear Sort: ", font=body_font)
+target_element_input = tk.Spinbox(root, from_=0, to=sys.maxsize, font=body_font)
+
+target_element_label.grid(row=6, column=2, sticky="w")
+target_element_input.grid(row=6, column=3, sticky="w")
 
 min_value_label.grid(row=1, column=0, sticky="w")
 min_value_input.grid(row=1, column=1, sticky="w")
