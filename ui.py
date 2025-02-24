@@ -56,6 +56,8 @@ def show_results_window(): # new window with result/visualization
     original_arr_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
     original_arr_label.pack()
 
+    original_array = array.copy()
+    
     algorithms = []
     search_times = {}
 
@@ -82,7 +84,7 @@ def show_results_window(): # new window with result/visualization
         result_label.pack()
     if wantLinearSearch.get() == 1:
         target_element = int(target_element_input.get())
-        target_location = linear_search(array, target_element)
+        target_location = linear_search(original_array, target_element)
         result_label = tk.Label(result_window, text=f"{target_element} is at index: {target_location}", font=body_font)
         result_label.pack()
 
