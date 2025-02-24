@@ -2,6 +2,8 @@ import tkinter as tk
 import random
 import sys
 from AnalyzingAlgorithms import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 def generate_random_array(min_value, max_value, num_of_elements):
     # generate random array
@@ -54,28 +56,47 @@ def show_results_window(): # new window with result/visualization
     original_arr_label = tk.Label(result_window, text=f"Original Array: {array}", font=body_font)
     original_arr_label.pack()
 
+    algorithms = []
+
     # check selected
     if wantBubbleSort.get() == 1:
+        algorithms.append(("Bubble Sort", bubble_sort))
         sorted_array = bubble_sort(array)
-        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label = tk.Label(result_window, text=f"Sorted Bubble Array: {sorted_array}", font=body_font)
         result_label.pack()
     if wantMergeSort.get() == 1:
+        algorithms.append(("Merge Sort", merge_sort))
         sorted_array = merge_sort(array)
-        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label = tk.Label(result_window, text=f"Sorted Merge Array: {sorted_array}", font=body_font)
         result_label.pack()
     if wantQuickSort.get() == 1:
+        algorithms.append(("Quick Sort", quick_sort))
         sorted_array = quick_sort(array)
-        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label = tk.Label(result_window, text=f"Sorted Quick Array: {sorted_array}", font=body_font)
         result_label.pack()
     if wantRadixSort.get() == 1:
+        algorithms.append(("Radix Sort", radix_sort))
         sorted_array = radix_sort(array)
-        result_label = tk.Label(result_window, text=f"Sorted Array: {sorted_array}", font=body_font)
+        result_label = tk.Label(result_window, text=f"Sorted Radix Array: {sorted_array}", font=body_font)
         result_label.pack()
     if wantLinearSearch.get() == 1:
+        algorithms.append(("Linear Search", linear_search))
         target_element = int(target_element_input.get())
         target_location = linear_search(array, target_element)
         result_label = tk.Label(result_window, text=f"{target_element} is at index: {target_location}", font=body_font)
         result_label.pack()
+
+
+    # Gather execution times
+    times = {name: measure_time(func, array) for name, func in algorithms}
+
+    # Create graph
+    plt.figure(figsize=(10, 5))
+    plt.bar(times.keys(), times.values(), color=['blue', 'green'])
+    plt.xlabel('Sorting Algorithm')
+    plt.ylabel('Time (seconds)')
+    plt.title('Execution Time of Sorting Algorithms')
+    plt.show()
 
 # create UI window
 root = tk.Tk()

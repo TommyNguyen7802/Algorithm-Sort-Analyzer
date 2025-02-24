@@ -1,5 +1,7 @@
 # Analyzing Algorithms in Big O
 
+import time
+
 # Bubble Sort O(n^2)
 def bubble_sort(arr):
     arr = arr.copy()
@@ -99,3 +101,10 @@ def linear_search(L,T):
         if L[index] == T:
             return index
     return -1
+
+# Measure execution time
+def measure_time(sort_func, arr):
+    start_time = time.time()
+    sort_func(arr.copy())
+    end_time = time.time()
+    return end_time - start_time
