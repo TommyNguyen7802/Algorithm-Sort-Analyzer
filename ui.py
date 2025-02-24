@@ -57,6 +57,7 @@ def show_results_window(): # new window with result/visualization
     original_arr_label.pack()
 
     algorithms = []
+    search_times = {}
 
     # check selected
     if wantBubbleSort.get() == 1:
@@ -80,22 +81,26 @@ def show_results_window(): # new window with result/visualization
         result_label = tk.Label(result_window, text=f"Sorted Radix Array: {sorted_array}", font=body_font)
         result_label.pack()
     if wantLinearSearch.get() == 1:
-        algorithms.append(("Linear Search", linear_search))
         target_element = int(target_element_input.get())
         target_location = linear_search(array, target_element)
         result_label = tk.Label(result_window, text=f"{target_element} is at index: {target_location}", font=body_font)
         result_label.pack()
 
+        # Measure Search Time
+        search_time = measure_search_time(linear_search, array, target_element)
+        search_times["Linear Search"] = search_time
 
     # Gather execution times
-    times = {name: measure_time(func, array) for name, func in algorithms}
+    times = {name: measure_sort_time(func, array) for name, func in algorithms}
+    # Combine execution times with search time
+    combined_times = {**times, **search_times}
 
     # Create graph
     plt.figure(figsize=(10, 5))
-    plt.bar(times.keys(), times.values(), color=['blue', 'green'])
+    plt.bar(combined_times.keys(), combined_times.values(), color=['blue', 'green'])
     plt.xlabel('Sorting Algorithm')
     plt.ylabel('Time (seconds)')
-    plt.title('Execution Time of Sorting Algorithms')
+    plt.title('Execution Time of Sorting Algorithms and Linear Search')
     plt.show()
 
 # create UI window

@@ -103,8 +103,15 @@ def linear_search(L,T):
     return -1
 
 # Measure execution time
-def measure_time(sort_func, arr):
+def measure_sort_time(sort_func, arr):
     start_time = time.time()
     sort_func(arr.copy())
     end_time = time.time()
     return end_time - start_time
+
+def measure_search_time(search_func, arr, target):
+    start_time = time.time()
+    search_func(arr, target)
+    end_time = time.time()
+    search_time = end_time - start_time
+    return search_time
