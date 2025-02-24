@@ -97,10 +97,11 @@ def radix_sort(arr):
 
 # Linear Search O(n)
 def linear_search(L,T):
-    for index in range(len(L)):
-        if L[index] == T:
-            return index
-    return -1
+    indices = []
+    for i in range(len(L)):
+        if L[i] == T:
+            indices.append(i)
+    return indices
 
 # Measure execution time
 def measure_sort_time(sort_func, arr):
