@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
+from anim_bubble import run_bubble_anim
 
 def generate_random_array(min_value, max_value, num_of_elements):
     # generate random array
@@ -56,6 +57,7 @@ def show_results_window(): # new window with result/visualization
         errors_label.config(text="") # clear error message
         array = generate_random_array(minimum_value, maximum_value, elements)
 
+    # ---------- new window(s) ----------
     # create new window that displays arrays
     if wantDisplayArrays.get() == 1:
         display_arrays_window = tk.Toplevel()
@@ -77,6 +79,8 @@ def show_results_window(): # new window with result/visualization
         if wantDisplayArrays.get() == 1:
             result_label = tk.Label(display_arrays_window, text=f"Sorted Bubble Array: {sorted_array}", font=body_font)
             result_label.pack()
+        if wantDisplayAnimations.get() == 1:
+            run_bubble_anim(array.copy())
     if wantMergeSort.get() == 1:
         algorithms.append(("Merge Sort", merge_sort))
         sorted_array = merge_sort(array)
@@ -101,11 +105,12 @@ def show_results_window(): # new window with result/visualization
         if wantDisplayArrays.get() == 1:
             result_label = tk.Label(display_arrays_window, text=f"{target_element} is at index: {target_location}", font=body_font)
             result_label.pack()
-        if wantDisplayGraphs.get() == 1:
+        if wantDisplayGraphs.get() == 1: # part of - Graph Window -
             # Measure Search Time
             search_time = measure_search_time(linear_search, array, target_element)
             search_times["Linear Search"] = search_time
 
+    # ----- Graph Window -----
     if wantDisplayGraphs.get() == 1:
         # Gather execution times
         times = {name: measure_sort_time(func, array) for name, func in algorithms}
@@ -176,7 +181,7 @@ target_element_input = tk.Spinbox(root, from_=0, to=sys.maxsize, font=body_font,
 target_element_label.grid(row=7, column=1, sticky="w")
 target_element_input.grid(row=7, column=2, sticky="w")
 
-# SECTION::::: chose what you show/run
+# SECTION::::: select what to display
 select_to_display = tk.Label(root, text="Select Display", font=header_font).grid(row=8, columnspan=2, sticky="n")
 
 wantDisplayArrays = tk.IntVar()
