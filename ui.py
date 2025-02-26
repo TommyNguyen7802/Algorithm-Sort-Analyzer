@@ -6,6 +6,7 @@ import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
 from anim_bubble import run_bubble_anim
+from anim_merge import animate_merge_sort
 
 def generate_random_array(min_value, max_value, num_of_elements):
     # generate random array
@@ -87,6 +88,8 @@ def show_results_window(): # new window with result/visualization
         if wantDisplayArrays.get() == 1:
             result_label = tk.Label(display_arrays_window, text=f"Sorted Merge Array: {sorted_array}", font=body_font)
             result_label.pack()
+        if wantDisplayAnimations.get() == 1:
+            animate_merge_sort(array.copy())
     if wantQuickSort.get() == 1:
         algorithms.append(("Quick Sort", quick_sort))
         sorted_array = quick_sort(array)
