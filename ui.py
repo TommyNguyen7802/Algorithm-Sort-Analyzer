@@ -8,6 +8,7 @@ from AnalyzingAlgorithms import *
 from anim_bubble import run_bubble_anim
 from anim_linear import run_linear_anim
 from anim_merge import animate_merge_sort
+from anim_radix import animate_radix_sort
 
 def generate_random_array(min_value, max_value, num_of_elements):
     # generate random array
@@ -103,6 +104,8 @@ def show_results_window(): # new window with result/visualization
         if wantDisplayArrays.get() == 1:
             result_label = tk.Label(display_arrays_window, text=f"Sorted Radix Array: {sorted_array}", font=body_font)
             result_label.pack()
+        if wantDisplayAnimations.get() == 1:
+            animate_radix_sort(array.copy())
     if wantLinearSearch.get() == 1:
         target_element = int(target_element_input.get())
         target_location = linear_search(original_array, target_element)
