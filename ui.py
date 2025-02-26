@@ -6,6 +6,7 @@ import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
 from anim_bubble import run_bubble_anim
+from anim_linear import run_linear_anim
 from anim_merge import animate_merge_sort
 
 def generate_random_array(min_value, max_value, num_of_elements):
@@ -112,6 +113,8 @@ def show_results_window(): # new window with result/visualization
             # Measure Search Time
             search_time = measure_search_time(linear_search, array, target_element)
             search_times["Linear Search"] = search_time
+        if wantDisplayAnimations.get() == 1:
+            run_linear_anim(array.copy(), target_element)
 
     # ----- Graph Window -----
     if wantDisplayGraphs.get() == 1:
