@@ -5,19 +5,18 @@ from matplotlib.animation import FuncAnimation
     ---------- algorithm ----------
     modified to include yield, yield is needed for animation
 '''
-def bubble_sort(arr):
-    arr = arr.copy()
-    n = len(arr)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                yield arr, j
-    yield arr, -1 # when finished j = -1
+def linear_search(L,T):
+    indices = []
+    for i in range(len(L)):
+        yield i, L, indices
+        if L[i] == T:
+            indices.append(i)
+            yield i, L, indices
+    yield -1, L, indices # when finished i = -1
 
-# ---------- animation ----------
+    # ---------- animation ----------
 def update_graph(frame, bars):
-    array, j = frame # get yieled values
+    i, array, indices = frame # get yieled values
 
     # change bar height
     for bar, height in zip(bars, array):
@@ -26,15 +25,16 @@ def update_graph(frame, bars):
     # change colors
     for bar in bars:
         bar.set_color("black")
-    if j != -1:
-        bars[j].set_color("red")
-        bars[j+1].set_color("red")
-    # else: # finished sorting
-        # for bar in bars:
-        #     bar.set_color("blue")
+    # highlight all found positions
+    for index in indices:
+        bars[index].set_color("blue")
+
+    if i != -1:
+        bars[i].set_color("red")
+    # else: # finished searching
 
 
-def run_bubble_anim(array):
+def run_linear_anim(array, target):
     # graph details
     figure, axis = plt.subplots()
     axis.set_xlim(0, len(array))
@@ -43,6 +43,6 @@ def run_bubble_anim(array):
     # bars, each bar is an element in array
     bars = axis.bar( range(len(array)), array, color="black")
 
-    animation = FuncAnimation(fig=figure, func=update_graph, fargs=(bars,),frames=bubble_sort(array), interval=250,
+    animation = FuncAnimation(fig=figure, func=update_graph, fargs=(bars,),frames=linear_search(array, target), interval=250,
                               repeat=False, cache_frame_data=False)
     plt.show()
