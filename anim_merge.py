@@ -9,7 +9,6 @@ def m_toggle_pause():
     pause = not pause
 
 def m_close():
-    sorting_steps = [] # clear
     plt.close()
 
 def merge_sort(arr, ax, bars, text, speed, start_index=0):
