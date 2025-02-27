@@ -204,10 +204,19 @@ def run_performance_analysis():
 
 def reset():
     animation_speed = convert_speed()
+    target = linear_search_target_input.get()
     if want_bubble_sort.get() == 1:
         b_close()
         # wait before opening/running new animation
         window.after(500, lambda: animate_bubble_sort(ARRAY.copy(), animation_speed))
+
+    if want_radix_sort.get() == 1:
+        r_reset()
+        window.after(500, lambda: animate_radix_sort(ARRAY.copy(), animation_speed))
+
+    if want_linear_search.get() == 1:
+        l_reset()
+        window.after(500, lambda: animate_linear_search(ARRAY.copy(), int(target),animation_speed))
 
 # ---------- main menu ----------
 window = tk.Tk()
@@ -307,7 +316,7 @@ start_button.pack(side=tk.LEFT, padx=5, pady=5)
 pause_button = tk.Button(button_frame, text="Pause", font=BODY_FONT, width=10, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
 pause_button.pack(side=tk.LEFT, padx=5, pady=5)
 
-reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[reset(), r_reset(), l_reset()])
+reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[reset()])
 reset_button.pack(side=tk.LEFT, padx=5, pady=5)    
 
 performance_analysis_button = tk.Button(button_frame, text="Performance Analysis", font=BODY_FONT, width=20, command=run_performance_analysis)

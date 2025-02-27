@@ -17,7 +17,6 @@ def l_reset():
         animation.event_source.stop()
     pause = False
     plt.close(figure)
-    animate_linear_search(original_array.copy(), target_copy ,speed)
 
 '''
     ---------- algorithm ----------
