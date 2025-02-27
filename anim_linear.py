@@ -44,7 +44,7 @@ def update_graph(frame, bars):
     # else: # finished searching
 
 
-def run_linear_anim(array, target):
+def animate_linear_search(array, target, speed):
     # graph details
     figure, axis = plt.subplots()
     axis.set_xlim(0, len(array))
@@ -53,6 +53,6 @@ def run_linear_anim(array, target):
     # bars, each bar is an element in array
     bars = axis.bar( range(len(array)), array, color="black")
 
-    animation = FuncAnimation(fig=figure, func=update_graph, fargs=(bars,),frames=linear_search(array, target), interval=250,
+    animation = FuncAnimation(fig=figure, func=update_graph, fargs=(bars,),frames=linear_search(array, target), interval=speed,
                               repeat=False, cache_frame_data=False)
     plt.show()

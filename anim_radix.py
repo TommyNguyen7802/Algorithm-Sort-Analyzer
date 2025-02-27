@@ -61,7 +61,7 @@ def update(frame):
 
     plt.ylim(0, max(arr) * 1.2)
 
-def animate_radix_sort(arr):
+def animate_radix_sort(arr, speed):
     global sorting_steps
     sorting_steps = []
 
@@ -70,5 +70,5 @@ def animate_radix_sort(arr):
     fig, ax = plt.subplots()
     ax.set_title("Radix Sort Animation")
 
-    ani = FuncAnimation(fig, update, frames=sorting_steps, repeat=False, interval=1000)
+    ani = FuncAnimation(fig, update, frames=sorting_steps, repeat=False, interval=speed)
     plt.show()
