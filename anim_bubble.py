@@ -7,6 +7,9 @@ def b_toggle_pause():
     global pause
     pause = not pause
 
+def b_close():
+    plt.close()
+
 '''
     ---------- algorithm ----------
     modified to include yield, yield is needed for animation

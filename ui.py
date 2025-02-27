@@ -6,7 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
-from anim_bubble import animate_bubble_sort, b_toggle_pause
+from anim_bubble import animate_bubble_sort, b_toggle_pause, b_close
 from anim_linear import animate_linear_search, l_toggle_pause, l_reset
 from anim_merge import animate_merge_sort, m_toggle_pause
 from anim_radix import animate_radix_sort, r_toggle_pause, r_reset
@@ -14,11 +14,25 @@ from anim_quick import animate_quick_sort, q_toggle_pause
 
 # consts
 SPEED = 250
+ARRAY = []
 
 # ---------- functions ----------
 def generate_random_array(min_value, max_value, num_of_elements):
     random_array = [random.randint(min_value, max_value) for _ in range(num_of_elements)]
     return random_array
+
+# lower value makes animation faster and vice versa - not intuitive so need to convert
+def convert_speed():
+    if want_display_animations.get() == 1:
+        speed_input = float(animation_speed_input.get())
+        if speed_input == 0.5:
+            return SPEED * 2.0
+        elif speed_input == 1.5:
+            return SPEED * 0.66
+        elif speed_input == 2.0:
+            return SPEED * 0.5
+        else:
+            return SPEED * speed_input
 
 def show_results_windows():
     # -- error handling --
@@ -54,6 +68,8 @@ def show_results_windows():
     # Clear error message if all checks passed
     error_message_label.config(text="")
     array = generate_random_array(minimum_value, maximum_value, elements)
+    global ARRAY
+    ARRAY = array
 
     '''
         -- create new window(s) --
@@ -70,17 +86,7 @@ def show_results_windows():
 
     algorithms_to_graph = []
     search_times = {}
-    # lower value makes animation faster and vice versa - not intuitive so need to convert
-    if want_display_animations.get() == 1:
-        speed_input = float(animation_speed_input.get())
-        if speed_input == 0.5:
-            animation_speed = SPEED * 2.0
-        elif speed_input == 1.5:
-            animation_speed = SPEED * 0.66
-        elif speed_input == 2.0:
-            animation_speed = SPEED * 0.5
-        else:
-            animation_speed = SPEED * speed_input
+    animation_speed = convert_speed()
 
     if want_bubble_sort.get() == 1:
         if want_display_arrays.get() == 1:
@@ -196,6 +202,13 @@ def run_performance_analysis():
     canvas_widget.pack()
     canvas.draw()
 
+def reset():
+    animation_speed = convert_speed()
+    if want_bubble_sort.get() == 1:
+        b_close()
+        # wait before opening/running new animation
+        window.after(500, lambda: animate_bubble_sort(ARRAY.copy(), animation_speed))
+
 # ---------- main menu ----------
 window = tk.Tk()
 window.title("Alogrithms Visualization")
@@ -294,7 +307,7 @@ start_button.pack(side=tk.LEFT, padx=5, pady=5)
 pause_button = tk.Button(button_frame, text="Pause", font=BODY_FONT, width=10, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
 pause_button.pack(side=tk.LEFT, padx=5, pady=5)
 
-reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[r_reset(), l_reset()])
+reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[reset(), r_reset(), l_reset()])
 reset_button.pack(side=tk.LEFT, padx=5, pady=5)    
 
 performance_analysis_button = tk.Button(button_frame, text="Performance Analysis", font=BODY_FONT, width=20, command=run_performance_analysis)
