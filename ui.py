@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import random
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
 from anim_bubble import animate_bubble_sort, b_toggle_pause
@@ -142,6 +144,58 @@ def show_results_windows():
         plt.title('Execution Time of Sorting Algorithms and Linear Search')
         plt.show()
 
+def run_performance_analysis():
+    sorting_algorithms = {
+        "Bubble Sort": bubble_sort,
+        "Merge Sort": merge_sort,
+        "Quick Sort": quick_sort,
+        "Radix Sort": radix_sort,
+    }
+
+    array_sizes = [100, 500, 1000, 5000]  # Different input sizes
+    results = {}
+
+    # Measure execution times
+    for algo_name, algo_func in sorting_algorithms.items():
+        results[algo_name] = {}
+        for size in array_sizes:
+            test_array = [random.randint(1, 10000) for _ in range(size)]
+            results[algo_name][size] = measure_sorting_time(algo_func, test_array)
+
+    analysis_window = tk.Toplevel()
+    analysis_window.title("Performance Analysis Results")
+
+    # Display results as text
+    text_output = tk.Text(analysis_window, wrap=tk.WORD, width=80, height=20)
+    text_output.pack(pady=10)
+
+    for algo, sizes in results.items():
+        text_output.insert(tk.END, f"\n{algo} Execution Times:\n")
+        for size, time_taken in sizes.items():
+            text_output.insert(tk.END, f"  Size {size}: {time_taken:.5f} sec\n")
+
+    # create graphs
+    fig, ax = plt.subplots(figsize=(10, 6))
+    bar_width = 0.2
+    x = np.arange(len(array_sizes))  # X-axis positions
+
+    for i, (algo, sizes) in enumerate(results.items()):
+        times = [sizes[size] for size in array_sizes]
+        ax.bar(x + i * bar_width, times, bar_width, label=algo)
+
+    ax.set_xlabel("Array Size")
+    ax.set_ylabel("Execution Time (seconds)")
+    ax.set_title("Sorting Algorithm Performance Comparison")
+    ax.set_xticks(x + bar_width)
+    ax.set_xticklabels([str(size) for size in array_sizes])
+    ax.legend()
+    ax.grid()
+
+    canvas = FigureCanvasTkAgg(fig, master=analysis_window)
+    canvas_widget = canvas.get_tk_widget()
+    canvas_widget.pack()
+    canvas.draw()
+
 # ---------- main menu ----------
 window = tk.Tk()
 window.title("Alogrithms Visualization")
@@ -230,11 +284,21 @@ error_message_label = tk.Label(frame, text="", font=BODY_FONT)
 error_message_label.grid(row=11, column=0, columnspan=2)
 
 # SECTION : Buttons
-start_button = tk.Button(frame, text="Start", font=BODY_FONT, width=10, command=show_results_windows)
-start_button.grid(row=12, column=0, sticky="w")
-pause_button = tk.Button(frame, text="Pause", font=BODY_FONT, width=10, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
-pause_button.grid(row=12, column=0, sticky="n")
-quit_button = tk.Button(frame, text="Quit", font=BODY_FONT, width=10, command=window.destroy)
-quit_button.grid(row=12, column=0, sticky="e")
+# SECTION : Buttons
+button_frame = tk.Frame(frame)  # Create a frame for buttons
+button_frame.grid(row=12, column=0, columnspan=3, pady=10)  # Center align buttons
+
+start_button = tk.Button(button_frame, text="Start", font=BODY_FONT, width=10, command=show_results_windows)
+start_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+pause_button = tk.Button(button_frame, text="Pause", font=BODY_FONT, width=10, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
+pause_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+performance_analysis_button = tk.Button(button_frame, text="Performance Analysis", font=BODY_FONT, width=20, command=run_performance_analysis)
+performance_analysis_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+quit_button = tk.Button(button_frame, text="Quit", font=BODY_FONT, width=10, command=window.destroy)
+quit_button.pack(side=tk.LEFT, padx=5, pady=5)
+
 
 window.mainloop()

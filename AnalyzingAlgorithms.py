@@ -110,6 +110,21 @@ def measure_sort_time(sort_func, arr):
     end_time = time.time()
     return end_time - start_time
 
+def measure_sorting_time(sort_func, arr):
+    size = len(arr)
+    sort_name = sort_func.__name__
+
+    print(f"Running {sort_name} on array of size {size}...")
+
+    start_time = time.time()
+    sort_func(arr.copy())
+    end_time = time.time()
+
+    time_taken = end_time - start_time
+    print(f"Completed {sort_name} on size {size} in {time_taken:.5f} sec")
+
+    return time_taken
+
 def measure_search_time(search_func, arr, target):
     start_time = time.time()
     search_func(arr, target)
