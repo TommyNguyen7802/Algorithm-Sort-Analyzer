@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-
 sorting_steps = []  # store progress
 
 def counting_sort(arr, exp):
@@ -24,36 +23,36 @@ def counting_sort(arr, exp):
 
     for i in range(n):
         arr[i] = output[i]
-        sorting_steps.append(arr.copy())  # append current state inside sorting_steps
+        sorting_steps.append((arr.copy(), i))
 
 def radix_sort(arr):
     global sorting_steps
-    sorting_steps = []  # Reset sorting steps
+    sorting_steps = []
     arr = arr.copy()
 
-    max_num = max(arr)  # Find the largest number to determine digit count
-    exp = 1  # Start with least significant digit (LSD)
+    max_num = max(arr)
+    exp = 1
 
     while max_num // exp > 0:
-        counting_sort(arr, exp)  # Sort by current digit
-        exp *= 10  # Move to next significant digit
+        counting_sort(arr, exp)
+        exp *= 10
 
-    return arr  # The array is now sorted
+    return arr
 
 def update(frame):
-    """Update function for animation, displaying numbers on top of bars."""
+    arr, current_index = frame
     plt.clf()
-    bars = plt.bar(range(len(frame)), frame, color='black')
+    bars = plt.bar(range(len(arr)), arr, color='black')
 
-    # Add text labels on top of each bar
-    for bar, value in zip(bars, frame):
+    for bar, value in zip(bars, arr):
         plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), 
                  str(value), ha='center', va='bottom', fontsize=12, color='red')
+        if bars.index(bar) == current_index:
+            bar.set_color('red')
 
-    plt.ylim(0, max(sorting_steps[-1]) * 1.2)
+    plt.ylim(0, max(arr) * 1.2)
 
 def animate_radix_sort(arr):
-    """Main function to animate Radix Sort using an externally provided array."""
     global sorting_steps
     sorting_steps = []
 
