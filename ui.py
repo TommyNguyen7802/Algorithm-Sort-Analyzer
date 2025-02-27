@@ -217,13 +217,7 @@ def reset():
         window.after(300, lambda: animate_quick_sort(ARRAY.copy(), animation_speed))
     if want_radix_sort.get() == 1:
         r_reset()
-    if want_linear_search.get() == 1:
-        l_reset()
-
-    if want_radix_sort.get() == 1:
-        r_reset()
-        window.after(500, lambda: animate_radix_sort(ARRAY.copy(), animation_speed))
-
+        window.after(400, lambda: animate_radix_sort(ARRAY.copy(), animation_speed))
     if want_linear_search.get() == 1:
         l_reset()
         window.after(500, lambda: animate_linear_search(ARRAY.copy(), int(target),animation_speed))
