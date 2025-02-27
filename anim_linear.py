@@ -2,10 +2,22 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 pause = False
+original_array = []
+speed = 1  # default speed for animation
+animation = None
+target_copy = 0
 
 def l_toggle_pause():
     global pause
     pause = not pause
+
+def l_reset():
+    global animation, pause, original_array, speed, figure, target_copy
+    if animation:
+        animation.event_source.stop()
+    pause = False
+    plt.close(figure)
+    animate_linear_search(original_array.copy(), target_copy ,speed)
 
 '''
     ---------- algorithm ----------
@@ -44,8 +56,12 @@ def update_graph(frame, bars):
     # else: # finished searching
 
 
-def animate_linear_search(array, target, speed):
+def animate_linear_search(array, target, interval):
     # graph details
+    global original_array, speed, figure, animation, target_copy
+    original_array = array.copy()
+    speed = interval
+    target_copy = target
     figure, axis = plt.subplots()
     axis.set_xlim(0, len(array))
     axis.set_ylim(min(array), max(array)+10)

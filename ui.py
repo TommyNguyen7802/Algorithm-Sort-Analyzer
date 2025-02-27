@@ -7,9 +7,9 @@ import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
 from anim_bubble import animate_bubble_sort, b_toggle_pause
-from anim_linear import animate_linear_search, l_toggle_pause
+from anim_linear import animate_linear_search, l_toggle_pause, l_reset
 from anim_merge import animate_merge_sort, m_toggle_pause
-from anim_radix import animate_radix_sort, r_toggle_pause
+from anim_radix import animate_radix_sort, r_toggle_pause, r_reset
 from anim_quick import animate_quick_sort, q_toggle_pause
 
 # consts
@@ -293,6 +293,9 @@ start_button.pack(side=tk.LEFT, padx=5, pady=5)
 
 pause_button = tk.Button(button_frame, text="Pause", font=BODY_FONT, width=10, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
 pause_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[r_reset(), l_reset()])
+reset_button.pack(side=tk.LEFT, padx=5, pady=5)    
 
 performance_analysis_button = tk.Button(button_frame, text="Performance Analysis", font=BODY_FONT, width=20, command=run_performance_analysis)
 performance_analysis_button.pack(side=tk.LEFT, padx=5, pady=5)

@@ -1,13 +1,25 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+import tkinter as tk
+import random
 
 pause = False
+original_array = []
+speed = 1  # default speed for animation
+sorting_steps = []  # store progress
+ani = None
 
 def r_toggle_pause():
     global pause
     pause = not pause
 
-sorting_steps = []  # store progress
+def r_reset():
+    global ani, pause, original_array, speed, fig
+    if ani:
+        ani.event_source.stop()
+    pause = False
+    plt.close(fig)
+    animate_radix_sort(original_array.copy(), speed)
 
 def counting_sort(arr, exp):
     global sorting_steps
@@ -61,9 +73,12 @@ def update(frame):
 
     plt.ylim(0, max(arr) * 1.2)
 
-def animate_radix_sort(arr, speed):
-    global sorting_steps
+def animate_radix_sort(arr, interval):
+    global sorting_steps, ani, original_array, speed, fig
     sorting_steps = []
+
+    original_array = arr.copy()  # store the original array
+    speed = interval  # set speed to the interval value
 
     radix_sort(arr)
 
@@ -72,3 +87,5 @@ def animate_radix_sort(arr, speed):
 
     ani = FuncAnimation(fig, update, frames=sorting_steps, repeat=False, interval=speed)
     plt.show()
+
+    return ani
