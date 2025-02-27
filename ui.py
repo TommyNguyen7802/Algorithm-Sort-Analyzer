@@ -23,7 +23,7 @@ def generate_random_array(min_value, max_value, num_of_elements):
 def show_results_windows():
     # -- error handling --
     if want_bubble_sort.get() == 0 and want_merge_sort.get() == 0 and want_quick_sort.get() == 0 \
-        and want_quick_sort.get() == 0 and want_linear_search.get() == 0:
+        and want_radix_sort.get() == 0 and want_linear_search.get() == 0:
         error_message_label.config(text="Error: No algorithm selected", fg="red")
         return
 
@@ -124,7 +124,7 @@ def show_results_windows():
             result_label = tk.Label(display_arrays_window, text=f"{linear_search_target_input} is at index: {target_locations}", font=BODY_FONT)
             result_label.pack()
         if want_display_animations.get() == 1:
-            animate_linear_search(array.copy(), animation_speed)
+            animate_linear_search(array.copy(), int(linear_search_target_input.get()), animation_speed)
         if want_display_graphs.get() == 1:
             search_time = measure_search_time(linear_search, array.copy(), linear_search_target_input)
             search_times["Linear Search"] = search_time
