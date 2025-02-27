@@ -9,6 +9,10 @@ def q_toggle_pause():
 
 sorting_steps = []  # store progress
 
+def q_close():
+    sorting_steps = []
+    plt.close()
+
 def quick_sort(arr):
     global sorting_steps
     if len(arr) <= 1:
