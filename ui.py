@@ -8,9 +8,9 @@ import numpy as np
 from AnalyzingAlgorithms import *
 from anim_bubble import animate_bubble_sort, b_toggle_pause, b_close
 from anim_linear import animate_linear_search, l_toggle_pause, l_reset
-from anim_merge import animate_merge_sort, m_toggle_pause
+from anim_merge import animate_merge_sort, m_toggle_pause, m_close
 from anim_radix import animate_radix_sort, r_toggle_pause, r_reset
-from anim_quick import animate_quick_sort, q_toggle_pause
+from anim_quick import animate_quick_sort, q_toggle_pause, q_close
 
 # consts
 SPEED = 250
@@ -208,7 +208,17 @@ def reset():
     if want_bubble_sort.get() == 1:
         b_close()
         # wait before opening/running new animation
-        window.after(500, lambda: animate_bubble_sort(ARRAY.copy(), animation_speed))
+        window.after(100, lambda: animate_bubble_sort(ARRAY.copy(), animation_speed))
+    if want_merge_sort.get() == 1:
+        m_close()
+        window.after(200, lambda: animate_merge_sort(ARRAY.copy(), animation_speed))
+    if want_quick_sort.get() == 1:
+        q_close()
+        window.after(300, lambda: animate_quick_sort(ARRAY.copy(), animation_speed))
+    if want_radix_sort.get() == 1:
+        r_reset()
+    if want_linear_search.get() == 1:
+        l_reset()
 
     if want_radix_sort.get() == 1:
         r_reset()
