@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+pause = False
+
+def l_toggle_pause():
+    global pause
+    pause = not pause
+
 '''
     ---------- algorithm ----------
     modified to include yield, yield is needed for animation
@@ -16,6 +22,10 @@ def linear_search(L,T):
 
     # ---------- animation ----------
 def update_graph(frame, bars):
+    global pause
+    while pause:
+        plt.pause(0.1)
+        
     i, array, indices = frame # get yieled values
 
     # change bar height

@@ -6,10 +6,15 @@ import numpy as np
 # other python files
 from AnalyzingAlgorithms import *
 from anim_bubble import run_bubble_anim
+from anim_bubble import b_toggle_pause
 from anim_linear import run_linear_anim
+from anim_linear import l_toggle_pause
 from anim_merge import animate_merge_sort
+from anim_merge import m_toggle_pause
 from anim_radix import animate_radix_sort
+from anim_radix import r_toggle_pause
 from anim_quick import animate_quick_sort
+from anim_quick import q_toggle_pause
 
 def generate_random_array(min_value, max_value, num_of_elements):
     # generate random array
@@ -137,6 +142,16 @@ def show_results_window(): # new window with result/visualization
         plt.title('Execution Time of Sorting Algorithms and Linear Search')
         plt.show()
 
+
+def update_plot_with_pause(arr, bars, text):
+    global pause
+    while pause:
+        plt.pause(0.1)
+    for bar, val in zip(bars, arr):
+        bar.set_height(val)
+    text.set_text('Array: ' + str(arr))
+    plt.pause(0.1)
+
 # ---------- main UI window ----------
 root = tk.Tk()
 
@@ -211,10 +226,12 @@ errors_label.grid(row=10, columnspan=3, sticky="w")
 
 # SECTION::::: buttons
 start_button = tk.Button(root, text="Start", font=body_font, width=20, command=show_results_window)
+pause_button = tk.Button(root, text="Pause", font=body_font, width=20, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
 quit_button = tk.Button(root, text="Quit", font=body_font, width=20, command=root.destroy)
 
 # buttons UI placement
 start_button.grid(row=11, column=0, sticky="w")
+pause_button.grid(row=11, column=1, sticky="w")
 quit_button.grid(row=11, column=2, sticky="w")
 
 

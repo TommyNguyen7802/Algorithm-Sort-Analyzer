@@ -2,6 +2,12 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 
+pause = False
+
+def m_toggle_pause():
+    global pause
+    pause = not pause
+
 def merge_sort(arr, ax, bars, text):
     if len(arr) > 1:
         mid = len(arr) // 2
@@ -37,9 +43,13 @@ def merge_sort(arr, ax, bars, text):
     return arr
 
 def update_plot(arr, bars, text):
+    global pause
     for bar, val in zip(bars, arr):
         bar.set_height(val)
     text.set_text('Array: ' + str(arr))
+    plt.draw()
+    while pause:
+        plt.pause(0.1)
     plt.pause(0.1)
 
 def animate_merge_sort(arr):

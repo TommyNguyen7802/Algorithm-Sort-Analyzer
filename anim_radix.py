@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+pause = False
+
+def r_toggle_pause():
+    global pause
+    pause = not pause
+
 sorting_steps = []  # store progress
 
 def counting_sort(arr, exp):
@@ -40,6 +46,9 @@ def radix_sort(arr):
     return arr
 
 def update(frame):
+    global pause
+    while pause:
+        plt.pause(0.1)
     arr, current_index = frame
     plt.clf()
     bars = plt.bar(range(len(arr)), arr, color='black')

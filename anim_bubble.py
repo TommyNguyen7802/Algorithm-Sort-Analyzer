@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+pause = False
+
+def b_toggle_pause():
+    global pause
+    pause = not pause
+
 '''
     ---------- algorithm ----------
     modified to include yield, yield is needed for animation
@@ -17,6 +23,10 @@ def bubble_sort(arr):
 
 # ---------- animation ----------
 def update_graph(frame, bars):
+    global pause
+    while pause:
+        plt.pause(0.1)
+        
     array, j = frame # get yieled values
 
     # change bar height

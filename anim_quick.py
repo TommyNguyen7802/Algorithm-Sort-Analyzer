@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+pause = False
+
+def q_toggle_pause():
+    global pause
+    pause = not pause
+
 sorting_steps = []  # store progress
 
 def quick_sort(arr):
@@ -18,6 +24,9 @@ def quick_sort(arr):
     return sorted_arr
 
 def update(frame):
+    global pause
+    while pause:
+        plt.pause(0.1)
     arr, pivot = frame
     plt.clf()
     bars = plt.bar(range(len(arr)), arr, color='black')
