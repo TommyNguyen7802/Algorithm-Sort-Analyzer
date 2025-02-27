@@ -8,7 +8,7 @@ import numpy as np
 from AnalyzingAlgorithms import *
 from anim_bubble import animate_bubble_sort, b_toggle_pause, b_close
 from anim_linear import animate_linear_search, l_toggle_pause, l_reset
-from anim_merge import animate_merge_sort, m_toggle_pause
+from anim_merge import animate_merge_sort, m_toggle_pause, m_close
 from anim_radix import animate_radix_sort, r_toggle_pause, r_reset
 from anim_quick import animate_quick_sort, q_toggle_pause
 
@@ -207,7 +207,14 @@ def reset():
     if want_bubble_sort.get() == 1:
         b_close()
         # wait before opening/running new animation
-        window.after(500, lambda: animate_bubble_sort(ARRAY.copy(), animation_speed))
+        window.after(100, lambda: animate_bubble_sort(ARRAY.copy(), animation_speed))
+    if want_merge_sort.get() == 1:
+        m_close()
+        window.after(200, lambda: animate_merge_sort(ARRAY.copy(), animation_speed))
+    if want_radix_sort.get() == 1:
+        r_reset()
+    if want_linear_search.get() == 1:
+        l_reset()
 
 # ---------- main menu ----------
 window = tk.Tk()
@@ -307,7 +314,7 @@ start_button.pack(side=tk.LEFT, padx=5, pady=5)
 pause_button = tk.Button(button_frame, text="Pause", font=BODY_FONT, width=10, command=lambda:[m_toggle_pause(), q_toggle_pause(), r_toggle_pause(), b_toggle_pause(), l_toggle_pause()])
 pause_button.pack(side=tk.LEFT, padx=5, pady=5)
 
-reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[reset(), r_reset(), l_reset()])
+reset_button = tk.Button(button_frame, text="Reset", font=BODY_FONT, width=20, command=lambda:[reset()])
 reset_button.pack(side=tk.LEFT, padx=5, pady=5)    
 
 performance_analysis_button = tk.Button(button_frame, text="Performance Analysis", font=BODY_FONT, width=20, command=run_performance_analysis)
