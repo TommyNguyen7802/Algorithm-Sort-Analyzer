@@ -65,9 +65,7 @@ def update(frame):
     plt.clf()
     bars = plt.bar(range(len(arr)), arr, color='black')
 
-    for bar, value in zip(bars, arr):
-        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), 
-                 str(value), ha='center', va='bottom', fontsize=12, color='red')
+    for bar in bars:
         if bars.index(bar) == current_index:
             bar.set_color('red')
 

@@ -35,8 +35,6 @@ def update(frame):
     bars = plt.bar(range(len(arr)), arr, color='black')
 
     for bar, value in zip(bars, arr):
-        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), 
-                 str(value), ha='center', va='bottom', fontsize=12, color='red')
         if value == pivot:
             bar.set_color('blue')
 
