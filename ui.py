@@ -161,7 +161,8 @@ def show_results_windows():
         if anim_select_input.get() == "Quick Sort":
             animate_quick_sort(array.copy(), animation_speed)
         if anim_select_input.get() == "Radix Sort":
-            animate_radix_sort(array.copy(), animation_speed)
+            if not plt.get_fignums():
+                animate_radix_sort(array.copy(), animation_speed)
         if anim_select_input.get() == "Linear Search":
             animate_linear_search(array.copy(), int(linear_search_target_input.get()), animation_speed)
 
