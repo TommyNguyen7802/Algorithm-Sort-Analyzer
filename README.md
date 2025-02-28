@@ -2,6 +2,8 @@
 
 This Python project analyzes the execution time of various sorting algorithms and visualizes the results using Tkinter for the GUI and Matplotlib for the graphs.
 
+To execute, run the ui.py file
+
 ## Features
 
 - Measure the execution time of different sorting algorithms.
