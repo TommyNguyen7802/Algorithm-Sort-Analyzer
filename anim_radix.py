@@ -19,7 +19,6 @@ def r_reset():
         ani.event_source.stop()
     pause = False
     plt.close(fig)
-    animate_radix_sort(original_array.copy(), speed)
 
 def counting_sort(arr, exp):
     global sorting_steps
