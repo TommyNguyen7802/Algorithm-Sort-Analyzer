@@ -183,20 +183,41 @@ def run_performance_analysis():
             test_array = [random.randint(1, 10000) for _ in range(size)]
             results[algo_name][size] = measure_sorting_time(algo_func, test_array)
 
+    # Create new window for analysis
     analysis_window = tk.Toplevel()
     analysis_window.title("Performance Analysis Results")
+    analysis_window.geometry("1000x600")
 
-    # Display results as text
-    text_output = tk.Text(analysis_window, wrap=tk.WORD, width=80, height=20)
-    text_output.pack(pady=10)
+    # Create a frame for side-by-side layout
+    content_frame = tk.Frame(analysis_window)
+    content_frame.pack(fill=tk.BOTH, expand=True)
+
+    # Configure rows and columns for resizing
+    content_frame.grid_columnconfigure(0, weight=1)
+    content_frame.grid_columnconfigure(1, weight=2)
+    content_frame.grid_rowconfigure(0, weight=1)
+
+    # Left Panel: Text Output
+    text_frame = tk.Frame(content_frame)
+    text_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+
+    text_output = tk.Text(text_frame, wrap=tk.WORD)
+    text_output.pack(fill=tk.BOTH, expand=True)
 
     for algo, sizes in results.items():
         text_output.insert(tk.END, f"\n{algo} Execution Times:\n")
         for size, time_taken in sizes.items():
             text_output.insert(tk.END, f"  Size {size}: {time_taken:.5f} sec\n")
 
-    # create graphs
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # Make text frame resizable
+    text_frame.grid_columnconfigure(0, weight=1)
+    text_frame.grid_rowconfigure(0, weight=1)
+
+    # Right Panel: Graph
+    graph_frame = tk.Frame(content_frame)
+    graph_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+
+    fig, ax = plt.subplots(figsize=(8, 6))  # Adjust initial size
     bar_width = 0.2
     x = np.arange(len(array_sizes))  # X-axis positions
 
@@ -212,10 +233,15 @@ def run_performance_analysis():
     ax.legend()
     ax.grid()
 
-    canvas = FigureCanvasTkAgg(fig, master=analysis_window)
+    canvas = FigureCanvasTkAgg(fig, master=graph_frame)
     canvas_widget = canvas.get_tk_widget()
-    canvas_widget.pack()
+    canvas_widget.pack(fill=tk.BOTH, expand=True)  # Make canvas resizable
     canvas.draw()
+
+    # Make graph frame resizable
+    graph_frame.grid_columnconfigure(0, weight=1)
+    graph_frame.grid_rowconfigure(0, weight=1)
+
 
 def reset():
     animation_speed = convert_speed()
