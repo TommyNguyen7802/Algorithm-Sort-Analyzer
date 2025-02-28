@@ -130,7 +130,7 @@ def show_results_windows():
             algorithms_to_graph.append(("Radix Sort", radix_sort))
     if want_linear_search.get() == 1:
         if want_display_arrays.get() == 1:
-            target_locations = linear_search(array.copy(), linear_search_target_input)
+            target_locations = linear_search(array.copy(), int(linear_search_target_input.get()))
             result_label = tk.Label(display_arrays_window, text=f"{linear_search_target_input.get()} is at index: {target_locations}", font=BODY_FONT)
             result_label.pack()
         if want_display_graphs.get() == 1:
